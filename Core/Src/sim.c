@@ -7,6 +7,7 @@
 #include "main.h"
 uint8_t buffer_sim[100] = {0};
 char url[] = "http://app.smav-agro.com:8080/api/v1/0308-01/telemetry";
+char apn[100] = "iot.telenet.be";
 // Tableau de correspondance des valeurs et des RSSI
  int valueToRSSI[] = {
     -109, // index 2 corresponds to value 2
@@ -95,7 +96,8 @@ void sendATCommandAndWaitForResponse_AT_Action(const char* command, const char* 
         NVIC_SystemReset();
     }
 }
-void sendATCommandAndWaitForResponse_gps(const char* command, const char* expectedResponse, uint32_t responseTimeout_ms, char* buffer_gps) {
+//**************************************** GPS *********************************************************
+/*void sendATCommandAndWaitForResponse_gps(const char* command, const char* expectedResponse, uint32_t responseTimeout_ms, char* buffer_gps) {
     int responseReceived = 0;
     uint32_t previousTick = HAL_GetTick();
     //char data_gps [100];
@@ -120,7 +122,8 @@ void sendATCommandAndWaitForResponse_gps(const char* command, const char* expect
     if (!responseReceived) {
         debugPrintln("Timeout waiting for response.");
     }
-}
+}*/
+//_____________________________________________________________________________________________________
 
 // Fonction pour extraire la valeur RSSI
 int extractRSSIValue(const char* response) {
@@ -180,18 +183,22 @@ void SIM_INIT(){
 
 	  sendATCommandAndWaitForResponse_AT_Action("AT\r\n", "OK", 3000);
 	  HAL_Delay(500);
-	  sendATCommandAndWaitForResponse("AT+CGPS=1\r\n", "OK", 3000);
-	  HAL_Delay(500);
+	  //************************* GPS **********************************
+	  /*sendATCommandAndWaitForResponse("AT+CGPS=1\r\n", "OK", 3000);
+	  HAL_Delay(500);*/
+	  //________________________________________________________________
 	  sendATCommandAndWaitForResponse("AT+CREG?\r\n", "OK", 3000);
 	  HAL_Delay(500);
 	  sendATCommandAndWaitForResponse("AT+CNMP=2\r\n", "OK", 3000);
 	  HAL_Delay(500);
-	  sprintf(ATcommand,"AT+CGDCONT=1,\"IP\",\"iot.telenet.be\"\r\n");
+	  sprintf(ATcommand,"AT+CGDCONT=1,\"IP\",\"%s\"\r\n", apn);
+	  //sprintf(ATcommand,"AT+CGDCONT=1,\"IP\",\"iot.telenet.be\"\r\n");
 	  sendATCommandAndWaitForResponse(ATcommand, "OK", 3000);
 	  HAL_Delay(500);
 
 }
-
+//********************************** GPS *******************************
+/*
 Coordinates parseNMEA(char* nmea) {
     Coordinates coords;
     char* token = strtok(nmea, ",");
@@ -249,6 +256,8 @@ float convertDMSToDecimal(float dms, char direction) {
     }
     return decimal;
 }
+*/
+//_____________________________________________________________________
 void HTTPConnect(char* data_Json){
 	sendATCommandAndWaitForResponse("AT+HTTPINIT\r\n", "OK", 3000);
 	HAL_Delay(500);

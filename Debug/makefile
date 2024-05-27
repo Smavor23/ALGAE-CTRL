@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := configuration final2
+BUILD_ARTIFACT_NAME := smav algae ctrl
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-configuration\ final2.elf \
+smav\ algae\ ctrl.elf \
 
 MAP_FILES += \
-configuration\ final2.map \
+smav\ algae\ ctrl.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-configuration\ final2.list \
+smav\ algae\ ctrl.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: configuration\ final2.elf secondary-outputs
+main-build: smav\ algae\ ctrl.elf secondary-outputs
 
 # Tool invocations
-configuration\ final2.elf configuration\ final2.map: $(OBJS) $(USER_OBJS) C:\Users\ABDELLATIF\Desktop\stm_Final\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "configuration final2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ABDELLATIF\Desktop\stm_Final\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="configuration final2.map" -Wl,--gc-sections -static -u _printf_float -u _scanf_float --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+smav\ algae\ ctrl.elf smav\ algae\ ctrl.map: $(OBJS) $(USER_OBJS) C:\Users\ABDELLATIF\Desktop\smav\ algae\ ctrl\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "smav algae ctrl.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ABDELLATIF\Desktop\smav algae ctrl\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="smav algae ctrl.map" -Wl,--gc-sections -static -u _printf_float -u _scanf_float --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-configuration\ final2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "configuration final2.list"
+smav\ algae\ ctrl.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "smav algae ctrl.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) configuration\ final2.elf configuration\ final2.list configuration\ final2.map configuration\\ final2.elf default.size.stdout
+	-$(RM) default.size.stdout smav\ algae\ ctrl.elf smav\ algae\ ctrl.list smav\ algae\ ctrl.map smav\\ algae\\ ctrl.elf
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

@@ -65,7 +65,7 @@ float Previous_PH = 1;
 
 //************************* SIM *******************************
 //char url[] = "http://demo.thingsboard.io/api/v1/9a4gm89e9r7kb5kll4ms/telemetry";
-char apn[100] = "iot.telenet.be";
+
 char ATcommand[200];
 int TensionBatt;
 int TensionStable;
@@ -157,19 +157,16 @@ int main(void)
   debugPrintln("------------------------------------------------------ SMART ALGAE CTRL ------------------------------------------------------");
   HAL_Delay(30000);
   SIM_INIT();
-  /*extractData(nmea, data_gps);
-  Coordinates coords = parseNMEA(data_gps);
-  float latitudeDecimal = convertDMSToDecimal(coords.latitude, coords.latDirection);
-  float longitudeDecimal = convertDMSToDecimal(coords.longitude, coords.lonDirection);*/
-  sendATCommandAndWaitForResponse_gps("AT+CGPSINFO\r\n", "OK", 3000, buffer_gps);
+  //***************************************** SIM ***************************************
+  /*sendATCommandAndWaitForResponse_gps("AT+CGPSINFO\r\n", "OK", 3000, buffer_gps);
   HAL_Delay(1000);
   extractData(buffer_gps, data_gps);
   Coordinates coords = parseNMEA(data_gps);
   latitudeDecimal = convertDMSToDecimal(coords.latitude, coords.latDirection);
   longitudeDecimal = convertDMSToDecimal(coords.longitude, coords.lonDirection);
   sendATCommandAndWaitForResponse("AT+CGPS=0\r\n", "OK", 3000);
-  HAL_Delay(500);
-
+  HAL_Delay(500);*/
+  //_____________________________________________________________________________________
   while (1)
   {
     /* USER CODE END WHILE */
@@ -206,7 +203,7 @@ int main(void)
 
  	  //******************************************************************* SIM *******************************************************
  	  rssi = sendATCommandAndWaitForResponse_signalquality("AT+CSQ\r\n", "OK", 3000);
- 	  snprintf(data_json, sizeof(data_json), "{\"temperature\":%.2f, \"Conductivity\":%.2f, \"Salinity\":%.2f, \"TDS\":%.2f, \"PH\":%.2f, \"TensionBatt\":%d, \"TensionStable\":%d, \"latitude\":%.8f, \"longitude\":%.8f, \"rssi\":%d, \"LoRa_Status\":\"%s\"}", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH, TensionBatt, TensionStable, latitudeDecimal, longitudeDecimal, rssi, LoRa_Status);
+ 	  snprintf(data_json, sizeof(data_json), "{\"temperature\":%.2f, \"Conductivity\":%.2f, \"Salinity\":%.2f, \"TDS\":%.2f, \"PH\":%.2f, \"TensionBatt\":%d, \"TensionStable\":%d, \"rssi\":%d, \"LoRa_Status\":\"%s\"}", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH, TensionBatt, TensionStable, rssi, LoRa_Status);
  	  HTTPConnect(data_json);
 
   }
