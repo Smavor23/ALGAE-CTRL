@@ -1,0 +1,17 @@
+../Core/Src/trx_sim.c:112:7:mystristr	32	static
+../Core/Src/trx_sim.c:142:6:SIM_SendString	16	static
+../Core/Src/trx_sim.c:149:7:SIM_SendRaw	16	static
+../Core/Src/trx_sim.c:157:9:SIM_Status_OK	16	static
+../Core/Src/trx_sim.c:205:13:SIM_SendAtCommand	24	static
+../Core/Src/trx_sim.c:235:7:SIM_InitValue	8	static
+../Core/Src/trx_sim.c:249:8:SIM_SaveParameters	8	static
+../Core/Src/trx_sim.c:257:6:SIM_SetFactoryDefault	8	static
+../Core/Src/trx_sim.c:265:5:SIM_IsNumberAdmin	24	static
+../Core/Src/trx_sim.c:278:5:SIM_IsNumberAdded	24	static
+../Core/Src/trx_sim.c:292:6:getUserNumbers	40	static
+../Core/Src/trx_sim.c:823:9:SIM_SetLang	16	static
+../Core/Src/trx_sim.c:854:6:SIM_Init	8	static
+../Core/Src/trx_sim.c:883:7:SIM_BufferProcess	104	dynamic
+../Core/Src/trx_sim.c:1402:6:StartSIMBuffTask	16	static
+../Core/Src/trx_sim.c:1418:6:updateLed	8	static
+../Core/Src/trx_sim.c:1444:6:RPC_control	8	static
