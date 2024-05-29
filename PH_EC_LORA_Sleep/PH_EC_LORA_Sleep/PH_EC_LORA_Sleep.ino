@@ -24,8 +24,8 @@ void setup() {
   Previous_time = millis();
   Serial.begin(115200);
   Serial_Canopus.begin(9600, SERIAL_8N1);
-  pinMode(PB5, OUTPUT);
-  digitalWrite(PB5, PWR_ON);  //On power Vrs485
+  pinMode(PA1, OUTPUT);
+  digitalWrite(PA1, PWR_ON);  //On power Vrs485 in V2
   init_lora(868000000);
   Serial.println("**************************************************************************************");
   Serial.println("******************************* ------------------ ***********************************");
@@ -186,7 +186,7 @@ void loop() {
   }
   //____________________________________________________________________________________
   }
-  for(int Lora_index = 0 ; Lora_index < 60 ; Lora_index++){
+  for(int Lora_index = 0 ; Lora_index < 30 ; Lora_index++){
   //************************* afficher la trame à envoyer *******************************
     Serial.println("************************");
     Serial.print("Trame à envoyer : [");

@@ -4489,8 +4489,8 @@ void sendATCommandAndWaitForResponse_AT_Action(const char* command, const char* 
  8002544:	f000 fbfe 	bl	8002d44 <debugPrintln>
 
         // Attendre un court délai pour la réponse
-        HAL_Delay(1000);
- 8002548:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+        HAL_Delay(500);
+ 8002548:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
  800254c:	f000 fca0 	bl	8002e90 <HAL_Delay>
 
         // Vérifier si la réponse contient la réponse attendue
@@ -4853,6 +4853,7 @@ void HTTPConnect(char* data_Json){
  80027ce:	490b      	ldr	r1, [pc, #44]	@ (80027fc <HTTPConnect+0xbc>)
  80027d0:	4812      	ldr	r0, [pc, #72]	@ (800281c <HTTPConnect+0xdc>)
  80027d2:	f7ff fea7 	bl	8002524 <sendATCommandAndWaitForResponse_AT_Action>
+	//sendATCommandAndWaitForResponse("AT+HTTPREAD=0,500\r\n","OK",3000);
 	HAL_Delay(3000);
  80027d6:	f640 30b8 	movw	r0, #3000	@ 0xbb8
  80027da:	f000 fb59 	bl	8002e90 <HAL_Delay>

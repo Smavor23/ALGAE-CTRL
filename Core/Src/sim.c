@@ -81,7 +81,7 @@ void sendATCommandAndWaitForResponse_AT_Action(const char* command, const char* 
         debugPrintln(command);
 
         // Attendre un court délai pour la réponse
-        HAL_Delay(1000);
+        HAL_Delay(500);
 
         // Vérifier si la réponse contient la réponse attendue
         if (strstr((char *)buffer_sim, expectedResponse)) {
@@ -272,6 +272,7 @@ void HTTPConnect(char* data_Json){
 	HAL_Delay(500);
 	sendATCommandAndWaitForResponse(data_Json, "OK", 6000);
 	sendATCommandAndWaitForResponse_AT_Action("AT+HTTPACTION=1\r\n", "OK", 3000);
+	//sendATCommandAndWaitForResponse("AT+HTTPREAD=0,500\r\n","OK",3000);
 	HAL_Delay(3000);
 	sendATCommandAndWaitForResponse("AT+HTTPTERM\r\n", "OK", 3000);
 	HAL_Delay(500);
