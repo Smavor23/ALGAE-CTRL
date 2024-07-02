@@ -6,4 +6,4 @@
 ../Core/Src/sim.c:140:5:getRSSI	3
 ../Core/Src/sim.c:148:5:sendATCommandAndWaitForResponse_signalquality	6
 ../Core/Src/sim.c:182:6:SIM_INIT	1
-../Core/Src/sim.c:261:6:HTTPConnect	1
+../Core/Src/sim.c:263:6:HTTPConnect	1

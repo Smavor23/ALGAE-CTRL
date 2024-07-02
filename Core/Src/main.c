@@ -46,7 +46,7 @@ char LoRa_Status [30];
 uint8_t LoRa_stat;
 char buffer[200];
 uint32_t RxData = 0;
-float DataArray[50]; // Tableau pour stocker les données séparées
+float DataArray[60]; // Tableau pour stocker les données séparées
 int size = sizeof(DataArray) / sizeof(DataArray[0]); // Taille du tableau
 
 float Temperature = 1;													/////
@@ -54,12 +54,14 @@ float Conductivity = 1;													/////
 float Salinity = 1;														/////
 float TDS = 1;															/////
 float PH = 1;
+float Chlorophyll = 1;
 
 float Previous_Temperature = 1;
 float Previous_Conductivity = 1;
 float Previous_Salinity = 1;
 float Previous_TDS = 1;
 float Previous_PH = 1;
+float Previous_Chlorophyll = 1;
 
 
 
@@ -183,6 +185,7 @@ int main(void)
 	     	              Previous_Salinity = DataArray[2];
 	     	              Previous_TDS = DataArray[3];
 	     	              Previous_PH = DataArray[4]/100;
+	     	              Previous_Chlorophyll = DataArray[5];
 	     	              strcpy(LoRa_Status, "LoRa is Ok");
 	              } else {
 	    	              HAL_UART_Transmit(&huart2, (uint8_t *)"LoRa n'est pas initialisé\n", strlen("LoRa n'est pas initialisé\n"), HAL_MAX_DELAY);
@@ -190,7 +193,7 @@ int main(void)
 	              }
 
 	           HAL_UART_Transmit(&huart2, (uint8_t *)"\n______________________ Les valeurs stocké ________________________\n", strlen("______________________ Les valeurs stocké ________________________\n"), HAL_MAX_DELAY);
-	           snprintf(buffer, sizeof(buffer), "\nTemperature : %.2f °C\nConductivity : %.2f us/cm\nSalinity: %.2f mg/L\nTDS: %.2f mg/L\nPH: %.2f ph \r\n", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH);
+	           snprintf(buffer, sizeof(buffer), "\nTemperature : %.2f °C\nConductivity : %.2f us/cm\nSalinity: %.2f mg/L\nTDS: %.2f mg/L\nPH: %.2f ph \r\nChlorophyll: %.2f ug/L \r\n", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH, Previous_Chlorophyll);
 	           HAL_UART_Transmit(&huart2, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
 	           HAL_UART_Transmit(&huart2, (uint8_t *)"______________________________________________\n", strlen("______________________________________________\n"), HAL_MAX_DELAY);
 
@@ -203,7 +206,7 @@ int main(void)
 
  	  //******************************************************************* SIM *******************************************************
  	  rssi = sendATCommandAndWaitForResponse_signalquality("AT+CSQ\r\n", "OK", 3000);
- 	  snprintf(data_json, sizeof(data_json), "{\"temperature\":%.2f, \"Conductivity\":%.2f, \"Salinity\":%.2f, \"TDS\":%.2f, \"PH\":%.2f, \"TensionBatt\":%d, \"TensionStable\":%d, \"rssi\":%d, \"LoRa_Status\":\"%s\"}", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH, TensionBatt, TensionStable, rssi, LoRa_Status);
+ 	  snprintf(data_json, sizeof(data_json), "{\"temperature\":%.2f, \"Conductivity\":%.2f, \"Salinity\":%.2f, \"TDS\":%.2f, \"PH\":%.2f, \"TensionBatt\":%d, \"TensionStable\":%d, \"rssi\":%d, \"LoRa_Status\":\"%s\", \"Chlorophyll\":%.2f}", Previous_Temperature, Previous_Conductivity, Previous_Salinity, Previous_TDS, Previous_PH, TensionBatt, TensionStable, rssi, LoRa_Status, Previous_Chlorophyll);
  	  HTTPConnect(data_json);
 
   }

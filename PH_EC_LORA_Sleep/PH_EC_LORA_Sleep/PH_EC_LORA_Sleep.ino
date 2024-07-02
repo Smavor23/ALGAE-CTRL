@@ -13,6 +13,7 @@ byte EC[] = {0x01, 0x03, 0x00, 0x02, 0x00, 0x01, 0x25, 0xca};
 byte Salinity[] = {0x01, 0x03, 0x00, 0x03, 0x00, 0x01, 0x74, 0x0a};
 byte TDS[] = {0x01, 0x03, 0x00, 0x04, 0x00, 0x01, 0xc5, 0xcb};
 byte PH[] = {0x02, 0x04, 0x00, 0x01, 0x00, 0x01, 0x60, 0x39};
+byte Chlorophyll[] = {0x10, 0x03, 0x00, 0x00, 0x00, 0x02, 0xc7, 0x4a};
 
 byte responseBuffer[50]; // Taille du tampon de réponse
 float Value, Val1;
@@ -154,6 +155,51 @@ int ph(){
   return Value;
 }
 
+
+// Fonction pour convertir une valeur 32 bits IEEE 754 en flottant
+float convertIEEE754(uint32_t value) {
+  union {
+    uint32_t i;
+    float f;
+  } u;
+  u.i = value;
+  return u.f;
+}
+
+float chlorophyll() {
+  // Envoyer la requête au capteur
+  RS485_Tranmit;
+  Serial_Canopus.write(Chlorophyll, sizeof(Chlorophyll));
+
+  // Lire la réponse
+  RS485_Receive;
+  delay(2000);
+  int responseLength = Serial_Canopus.available();
+  if (responseLength > 0) {
+    for (int i = 0; i < responseLength; i++) {
+      responseBuffer[i] = Serial_Canopus.read();
+    }
+    
+    // Vérifier la longueur de la réponse et extraire les données
+    if (responseLength >= 9) {
+      uint32_t combinedData = (responseBuffer[3] << 24) | (responseBuffer[4] << 16) | (responseBuffer[5] << 8) | responseBuffer[6];
+      Value = convertIEEE754(combinedData);
+      Serial.print("Chlorophyll : ");
+      Serial.print(Value);
+      Serial.println(" ug/L");
+      
+    } else {
+      Serial.println("Réponse invalide.");
+      Value = 0;
+    }
+  } else {
+    Serial.println("Aucune réponse reçue.");
+    Value = 0;
+  }
+
+  return Value;
+}
+
 void loop() {
   int EndFrame = 101010; // c'est pour éviter le bruit dans la fin de la trame
   //for (int repoot_index = 0 ; repoot_index < 473 ; repoot_index++){
@@ -172,11 +218,14 @@ void loop() {
   delay(1000);
 
   int val5 = ph();
+  delay(1000);
+  
+  float val6 = chlorophyll();
   delay(2000);
 
   //****** Convertir chaque valeur en une chaîne de caractères et les concaténer ********
   char str[50]; // Taille suffisamment grande pour contenir les valeurs et les séparateurs
-  sprintf(str, "%d,%d,%d,%d,%d,%d", val1, val2, val3, val4, val5, EndFrame);
+  sprintf(str, "%d,%d,%d,%d,%d,%f,%d", val1, val2, val3, val4, val5, val6, EndFrame);
   //____________________________________________________________________________________
 
   //*************** Convertir la chaîne de caractères en un tableau uint8_t*************

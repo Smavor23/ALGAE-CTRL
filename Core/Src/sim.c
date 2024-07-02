@@ -6,8 +6,8 @@
 #include <string.h>
 #include "main.h"
 uint8_t buffer_sim[100] = {0};
-char url[] = "http://app.smav-agro.com:8080/api/v1/0308-01/telemetry";
-char apn[100] = "iot.telenet.be";
+char url[] = "http://thingsboard.cloud/api/v1/1kovbjkoj723q0jxmpda/telemetry";
+char apn[100] = "www.inwi.ma";
 // Tableau de correspondance des valeurs et des RSSI
  int valueToRSSI[] = {
     -109, // index 2 corresponds to value 2
@@ -182,6 +182,8 @@ int sendATCommandAndWaitForResponse_signalquality(char* command, char* expectedR
 void SIM_INIT(){
 
 	  sendATCommandAndWaitForResponse_AT_Action("AT\r\n", "OK", 3000);
+	  HAL_Delay(500);
+	  sendATCommandAndWaitForResponse_AT_Action("AT+CPIN=0000\r\n", "OK", 3000);
 	  HAL_Delay(500);
 	  //************************* GPS **********************************
 	  /*sendATCommandAndWaitForResponse("AT+CGPS=1\r\n", "OK", 3000);

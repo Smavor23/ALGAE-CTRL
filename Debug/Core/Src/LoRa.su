@@ -20,5 +20,5 @@
 ../Core/Src/LoRa.c:483:9:LoRa_receive	48	static
 ../Core/Src/LoRa.c:516:5:LoRa_getRSSI	24	static
 ../Core/Src/LoRa.c:532:10:LoRa_init	24	static
-../Core/Src/LoRa.c:607:6:separateData	88	static
-../Core/Src/LoRa.c:640:6:receiveAndProcessLoRaFrame	320	static
+../Core/Src/LoRa.c:607:6:separateData	96	static
+../Core/Src/LoRa.c:640:6:receiveAndProcessLoRaFrame	336	static

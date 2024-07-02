@@ -607,7 +607,7 @@ uint16_t LoRa_init(LoRa* _LoRa){
 void separateData(uint8_t *dataReceived, float *dataArray, int size) {
     char *ptr;
     int i = 0;
-    char tempBuffer[50]; // Augmentez la taille du tampon temporaire si nécessaire
+    char tempBuffer[60]; // Augmentez la taille du tampon temporaire si nécessaire
 
     // Copie des données reçues dans un tampon temporaire pour éviter de les modifier
     strncpy(tempBuffer, dataReceived, sizeof(tempBuffer) - 1);
@@ -653,8 +653,9 @@ void receiveAndProcessLoRaFrame(int bytes_received, uint8_t *read_data, float *D
         float Salinity = DataArray[2];
         float TDS = DataArray[3];
         float PH = DataArray[4]/100;
+        float Chlorophyll = DataArray[5];
 
-        snprintf(buffer, sizeof(buffer), "\nTemperature : %.2f °C\nConductivity : %.2f us/cm\nSalinity: %.2f mg/L\nTDS: %.2f mg/L\nPH: %.2f ph \r\n", Temperature, Conductivity, Salinity, TDS, PH);
+        snprintf(buffer, sizeof(buffer), "\nTemperature : %.2f °C\nConductivity : %.2f us/cm\nSalinity: %.2f mg/L\nTDS: %.2f mg/L\nPH: %.2f ph \r\nChlorophyll: %.2f ug/L\n", Temperature, Conductivity, Salinity, TDS, PH, Chlorophyll);
         HAL_UART_Transmit(&huart2, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
 
     } else {
